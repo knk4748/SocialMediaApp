@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "134110470002",
+    "firebase_url": "https://cobra1-fb6a8.firebaseio.com",
+    "project_id": "cobra1-fb6a8",
+    "storage_bucket": "cobra1-fb6a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:134110470002:android:3d2ad1cf8a3e8dacc1c7eb",
+        "android_client_info": {
+          "package_name": "com.example.cobra1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "134110470002-32hgmnlgdr9k6hd5ksca0quovm81pld2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cobra1",
+            "certificate_hash": "b82e2cb4f385ab3f6ea70a8e26206deb554d34c0"
+          }
+        },
+        {
+          "client_id": "134110470002-in7fvoph5in7rtkf3663v8k704r5qdom.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEbdrOQrW9qBABytbIcJ-zVe5iBByBmdA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "134110470002-in7fvoph5in7rtkf3663v8k704r5qdom.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
