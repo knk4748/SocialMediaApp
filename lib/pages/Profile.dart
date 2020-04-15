@@ -4,11 +4,6 @@ import 'package:cobra1/Widgets/header.dart';
 import 'package:flutter/material.dart';
 
 
-
-
-
-
-
 class Profile extends StatefulWidget {
   @override
   _ProfileState createState() => _ProfileState();

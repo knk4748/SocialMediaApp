@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cobra1/model/user.dart';
+import 'package:cobra1/pages/CreateAccount.dart';
 import 'package:cobra1/pages/Upload.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,9 +9,12 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'ActivityFeed.dart';
 import 'Profile.dart';
 import 'Search.dart';
-import 'Timeline.dart';
+//import 'Search.dart';
 
 final GoogleSignIn googleSignIn = GoogleSignIn();
+final usersRef = Firestore.instance.collection('Users');
+final timestamp = DateTime.now();
+User currentUser;
 
 class Home extends StatefulWidget {
   @override
@@ -39,24 +45,50 @@ class _HomeState extends State<Home> {
     });
 
     googleSignIn.signInSilently(suppressErrors: false).then((account) {
-      handleSignin(account);
+    handleSignin(account);
     });
     _pageController = PageController();
   }
 
   void handleSignin(GoogleSignInAccount account) {
     if (account != null) {
-      print("login success");
+      createUserInFirestore();
+      print("google account found");
       print(account);
-      setState(() {
-        isAuth = true;
-      });
+      setState(
+        () {
+          isAuth = true;
+        },
+      );
     } else {
       print("auth failed");
-      setState(() {
-        isAuth = false;
+      setState(
+        () {
+          isAuth = false;
+        },
+      );
+    }
+  }
+
+  createUserInFirestore() async {
+    final GoogleSignInAccount user = googleSignIn.currentUser;
+    DocumentSnapshot doc = await usersRef.document(user.id).get();
+
+    if (!doc.exists) {
+      final username = await Navigator.push(
+          context, MaterialPageRoute(builder: (context) => CreateAccount()));
+
+      usersRef.document(user.id).setData({
+        "id": user.id,
+        "username": username,
+        "photoURL": user.photoUrl,
+        "email": user.email,
+        "displayName": user.displayName,
+        "bio": "",
+        "timestamp": timestamp,
       });
     }
+    currentUser = User.fromDocument(doc);
   }
 
   @override
@@ -72,7 +104,8 @@ class _HomeState extends State<Home> {
   }
 
   onTap(int pageIndex) {
-    _pageController.animateToPage(pageIndex,duration: Duration(milliseconds: 300),curve: Curves.easeIn);
+    _pageController.animateToPage(pageIndex,
+        duration: Duration(milliseconds: 300), curve: Curves.easeIn);
   }
 
   Color color1 = Colors.redAccent;
@@ -80,7 +113,11 @@ class _HomeState extends State<Home> {
     return Scaffold(
       body: PageView(
         children: <Widget>[
-          Timeline(),
+          //  Timeline(),
+          RaisedButton(
+            child: Text("log out"),
+            onPressed: logout,
+          ),
           ActivityFeed(),
           Upload(),
           Search(),

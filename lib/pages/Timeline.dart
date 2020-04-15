@@ -16,10 +16,7 @@ class _TimelineState extends State<Timeline> {
 
   @override
   void initState() {
-    // getUsersByQuery();
-    // createUser();
-    //updateUser();
-    //deleteUser();
+    
     super.initState();
   }
 
@@ -73,10 +70,14 @@ class _TimelineState extends State<Timeline> {
           future: userRef.getDocuments(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return cirularProgress();
+              return circularProgress();
             }
             final List<Text> listedUserText = snapshot.data.documents
-                .map((doc) => Text(doc["username"]))
+                .map(
+                  (doc) => Text(
+                    doc["username"],
+                  ),
+                )
                 .toList();
             return Container(
               child: ListView(
