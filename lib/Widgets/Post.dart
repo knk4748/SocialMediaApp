@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cobra1/Widgets/Custom_image.dart';
 import 'package:cobra1/Widgets/progress.dart';
 import 'package:cobra1/model/user.dart';
 import 'package:cobra1/pages/home.dart';
@@ -80,8 +81,6 @@ class _PostState extends State<Post> {
       this.likes,
       this.likeCount});
 
-
-
   buildPostHeader() {
     return FutureBuilder(
       future: usersRef.document(ownerId).get(),
@@ -115,7 +114,9 @@ class _PostState extends State<Post> {
       onDoubleTap: () => print("liking post,"),
       child: Stack(
         alignment: Alignment.center,
-        children: <Widget>[Image.network(mediaUrl)],
+        children: <Widget>[
+          cachedNetworkImage(mediaUrl),
+        ],
       ),
     );
   }
@@ -167,8 +168,6 @@ class _PostState extends State<Post> {
     );
   }
 
-    
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -177,7 +176,6 @@ class _PostState extends State<Post> {
         buildPostHeader(),
         buildPostImage(),
         buildPostFooter()
-       
       ],
     );
   }
