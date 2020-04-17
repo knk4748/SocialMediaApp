@@ -16,7 +16,7 @@ factory User.fromDocument(DocumentSnapshot doc){
     id        :  doc["id"],
     email     :  doc['email'],
     username  :  doc['username'],
-    photoUrl  :  doc['displayName'],
+    photoUrl  :  doc['photoUrl'],
     bio       :  doc['bio'],
     displayName: doc['displayName']
     );

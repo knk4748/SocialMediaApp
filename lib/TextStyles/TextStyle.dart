@@ -15,3 +15,9 @@ TextStyle appTitleTextStyle() {
     fontWeight: FontWeight.bold,
   );
 }
+TextStyle profilePageText(){
+  return TextStyle(
+    color:Colors.black,
+    fontSize:29 ,
+  );
+}

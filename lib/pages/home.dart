@@ -2,20 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cobra1/model/user.dart';
 import 'package:cobra1/pages/CreateAccount.dart';
 import 'package:cobra1/pages/Upload.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
 import 'ActivityFeed.dart';
 import 'Profile.dart';
 import 'Search.dart';
 //import 'Search.dart';
-
+final StorageReference storageRef = FirebaseStorage.instance.ref();
 final GoogleSignIn googleSignIn = GoogleSignIn();
 final usersRef = Firestore.instance.collection('Users');
 final timestamp = DateTime.now();
 User currentUser;
-
+final postsRef = Firestore.instance.collection('Posts');
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -60,7 +60,8 @@ class _HomeState extends State<Home> {
           isAuth = true;
         },
       );
-    } else {
+    } 
+    else {
       print("auth failed");
       setState(
         () {
@@ -81,7 +82,7 @@ class _HomeState extends State<Home> {
       usersRef.document(user.id).setData({
         "id": user.id,
         "username": username,
-        "photoURL": user.photoUrl,
+        "photoUrl": user.photoUrl,
         "email": user.email,
         "displayName": user.displayName,
         "bio": "",
@@ -119,9 +120,9 @@ class _HomeState extends State<Home> {
             onPressed: logout,
           ),
           ActivityFeed(),
-          Upload(),
+          Upload(currentUser: currentUser,),
           Search(),
-          Profile(),
+          Profile(profileId : currentUser?.id),
         ],
         controller: _pageController,
         onPageChanged: onPageChanged,

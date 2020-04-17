@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cobra1/Widgets/header.dart';
 import 'package:cobra1/Widgets/progress.dart';
+import 'package:cobra1/pages/home.dart';
 import 'package:flutter/material.dart';
 //import 'package:rxdart/rxdart.dart';
 
-final userRef = Firestore.instance.collection('Users');
+//final usersRef = Firestore.instance.collection('Users');
 
 class Timeline extends StatefulWidget {
   @override
@@ -22,30 +23,30 @@ class _TimelineState extends State<Timeline> {
 
 /*
   deleteUser(){
-     userRef.document("hjbrgwjb").delete();
+     usersRef.document("hjbrgwjb").delete();
   }
 
   updateUser() {
-    userRef.document("hjbrgwjb").updateData({"username": "henry"});
+    usersRef.document("hjbrgwjb").updateData({"username": "henry"});
   }
 
  createUser() async{
-    userRef.add({"username":"mark","postcount":8,"isadmin": false});
+    usersRef.add({"username":"mark","postcount":8,"isadmin": false});
   }
  createUser() async{
-    userRef.document("hjbrgwjb").setData({"username":"john","postcount":1,"isadmin": false});
+    usersRef.document("hjbrgwjb").setData({"username":"john","postcount":1,"isadmin": false});
   }
 
    getUsersByID() async {
     String id = "SWlndWyoqOuYjRdLTKub";
 
-    DocumentSnapshot doc = await userRef.document(id).get();
+    DocumentSnapshot doc = await usersRef.document(id).get();
     print(doc.documentID);
     print(doc.data);
   }
 
   getUsers() {
-    userRef.getDocuments().then((QuerySnapshot snapshot) {
+    usersRef.getDocuments().then((QuerySnapshot snapshot) {
       snapshot.documents.forEach((DocumentSnapshot doc) {
         print(doc.data);
         print(doc.documentID);
@@ -56,7 +57,7 @@ class _TimelineState extends State<Timeline> {
 
   getUsersByQuery() async {
     QuerySnapshot snapshot =
-        await userRef.where("postcount", isLessThan: 3).getDocuments();
+        await usersRef.where("postcount", isLessThan: 3).getDocuments();
     snapshot.documents.forEach((DocumentSnapshot doc) {
       print(doc.data);
     });
@@ -67,7 +68,7 @@ class _TimelineState extends State<Timeline> {
     return Scaffold(
         appBar: header(context, titleText: "Timeline", isAppTitle: true),
         body: FutureBuilder<QuerySnapshot>(
-          future: userRef.getDocuments(),
+          future: usersRef.getDocuments(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return circularProgress();
