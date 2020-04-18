@@ -63,6 +63,8 @@ class Post extends StatefulWidget {
 }
 
 class _PostState extends State<Post> {
+  final String currentUserId = currentUser?.id;
+
   final String postId;
   final String ownerId;
   final String username;
@@ -70,6 +72,7 @@ class _PostState extends State<Post> {
   final String description;
   final String mediaUrl;
   Map likes;
+  bool isLiked;
   int likeCount;
   _PostState(
       {this.postId,
@@ -80,6 +83,41 @@ class _PostState extends State<Post> {
       this.mediaUrl,
       this.likes,
       this.likeCount});
+
+  handleLikesPost() {
+    bool _isLiked = likes[currentUserId] == true;
+    if (_isLiked) {
+      postsRef
+          .document(ownerId)
+          .collection('userPosts')
+          .document(postId)
+          .updateData(
+        {
+          'likes.$currentUserId': false,
+        },
+      );
+      setState(() {
+        likeCount--;
+        isLiked = false;
+        likes[currentUserId] = false;
+      });
+    } else if (!_isLiked) {
+      postsRef
+          .document(ownerId)
+          .collection('userPosts')
+          .document(postId)
+          .updateData(
+        {
+          'likes.$currentUserId': false,
+        },
+      );
+      setState(() {
+        likeCount++;
+        isLiked = true;
+        likes[currentUserId] = true;
+      });
+    }
+  }
 
   buildPostHeader() {
     return FutureBuilder(
@@ -111,7 +149,7 @@ class _PostState extends State<Post> {
 
   buildPostImage() {
     return GestureDetector(
-      onDoubleTap: () => print("liking post,"),
+      onDoubleTap: () => handleLikesPost,
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
@@ -131,8 +169,12 @@ class _PostState extends State<Post> {
               padding: EdgeInsets.only(top: 40, left: 20),
             ),
             GestureDetector(
-              child:
-                  Icon(Icons.favorite_border, size: 28.0, color: Colors.pink),
+              onTap: handleLikesPost,
+              child: Icon(
+                isLiked ? Icons.favorite : Icons.favorite_border,
+                size: 28.0,
+                color: Colors.pink,
+              ),
             ),
             Padding(padding: EdgeInsets.only(right: 20)),
             GestureDetector(
@@ -170,6 +212,7 @@ class _PostState extends State<Post> {
 
   @override
   Widget build(BuildContext context) {
+    isLiked = (likes[currentUserId] == true);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[

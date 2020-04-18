@@ -9,6 +9,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'ActivityFeed.dart';
 import 'Profile.dart';
 import 'Search.dart';
+
 //import 'Search.dart';
 final StorageReference storageRef = FirebaseStorage.instance.ref();
 final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -16,6 +17,7 @@ final usersRef = Firestore.instance.collection('Users');
 final timestamp = DateTime.now();
 User currentUser;
 final postsRef = Firestore.instance.collection('Posts');
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -45,7 +47,7 @@ class _HomeState extends State<Home> {
     });
 
     googleSignIn.signInSilently(suppressErrors: false).then((account) {
-    handleSignin(account);
+      handleSignin(account);
     });
     _pageController = PageController();
   }
@@ -60,8 +62,7 @@ class _HomeState extends State<Home> {
           isAuth = true;
         },
       );
-    } 
-    else {
+    } else {
       print("auth failed");
       setState(
         () {
@@ -115,14 +116,11 @@ class _HomeState extends State<Home> {
       body: PageView(
         children: <Widget>[
           //  Timeline(),
-          RaisedButton(
-            child: Text("log out"),
-            onPressed: logout,
-          ),
+          RaisedButton(child: Text("log out"), onPressed: logout),
           ActivityFeed(),
-          Upload(currentUser: currentUser,),
+          Upload(currentUser: currentUser),
           Search(),
-          Profile(profileId : currentUser?.id),
+          Profile(profileId: currentUser?.id),
         ],
         controller: _pageController,
         onPageChanged: onPageChanged,
