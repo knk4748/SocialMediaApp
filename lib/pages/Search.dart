@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cobra1/Widgets/progress.dart';
 import 'package:cobra1/model/user.dart';
+import 'package:cobra1/pages/ActivityFeed.dart';
 import 'package:flutter/material.dart';
 
 import 'home.dart';
@@ -58,8 +59,8 @@ class _SearchState extends State<Search> {
         child: ListView(
           shrinkWrap: true,
           children: <Widget>[
-            Image(image: AssetImage("assets/ironman.jpg") )
-            ,Text(
+            Image(image: AssetImage("assets/ironman.jpg")),
+            Text(
               "Find Users",
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -120,10 +121,13 @@ class UserResult extends StatelessWidget {
       child: Column(
         children: <Widget>[
           GestureDetector(
-            onTap: () => print('tapped'),
+            onTap: () => showProfile(
+              context,
+              profileId: user.id,
+            ),
             child: ListTile(
               leading: CircleAvatar(
-             //   backgroundColor: Colors.grey,
+                //   backgroundColor: Colors.grey,
                 backgroundImage: CachedNetworkImageProvider(user.photoUrl),
               ),
               title: Text(

@@ -2,12 +2,6 @@ import 'dart:async';
 import 'package:cobra1/Widgets/header.dart';
 import 'package:flutter/material.dart';
 
-
-
-
-
-
-
 class CreateAccount extends StatefulWidget {
   @override
   _CreateAccountState createState() => _CreateAccountState();
@@ -33,13 +27,13 @@ class _CreateAccountState extends State<CreateAccount> {
   @override
   Widget build(BuildContext parentcontext) {
     return Scaffold(
-        key: _scaffolfdKey,
-        appBar: header(context,
-            titleText: "Create account",
-            isAppTitle: false,
-            removeBackbutton: true),
-        body: Scaffold(
-            body: Column(
+      key: _scaffolfdKey,
+      appBar: header(context,
+          titleText: "Create account",
+          isAppTitle: false,
+          removeBackbutton: true),
+      body: Scaffold(
+        body: Column(
           children: <Widget>[
             Text("Create a Username"),
             Container(
@@ -61,9 +55,10 @@ class _CreateAccountState extends State<CreateAccount> {
                   },
                   onSaved: (val) => username = val,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Username",
-                      hintText: "Must be atleast 3 characters"),
+                    border: OutlineInputBorder(),
+                    labelText: "Username",
+                    hintText: "Must be atleast 3 characters",
+                  ),
                 ),
               ),
             ),
@@ -81,6 +76,8 @@ class _CreateAccountState extends State<CreateAccount> {
               onTap: submit,
             )
           ],
-        )));
+        ),
+      ),
+    );
   }
 }

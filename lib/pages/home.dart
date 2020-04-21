@@ -17,7 +17,8 @@ final usersRef = Firestore.instance.collection('Users');
 final timestamp = DateTime.now();
 User currentUser;
 final postsRef = Firestore.instance.collection('Posts');
-
+final commentsRef = Firestore.instance.collection('comments');
+final activityFeedRef = Firestore.instance.collection("feed");
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();

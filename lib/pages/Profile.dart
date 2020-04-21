@@ -24,6 +24,7 @@ class _ProfileState extends State<Profile> {
   final String currentUserId = currentUser?.id;
   String postOrientation = "Grid";
   bool isLoading = false;
+  bool isFollowing = false;
   int postCount = 0;
   List<Post> posts = [];
 
@@ -76,20 +77,13 @@ class _ProfileState extends State<Profile> {
   buildProfilePosts() {
     if (isLoading) {
       return circularProgress();
-    } 
-    else if(posts.isEmpty){
-      return Container(child:
-      Column(
-        children: <Widget>[
-          Icon(Icons.flag),
-          Text("no Posts to show")
-        ],
-      ));
-    }
-    
-    
-    
-    else if (postOrientation == "Grid") {
+    } else if (posts.isEmpty) {
+      return Container(
+        child: Column(
+          children: <Widget>[Icon(Icons.flag), Text("no Posts to show")],
+        ),
+      );
+    } else if (postOrientation == "Grid") {
       List<GridTile> gridTiles = [];
       posts.forEach((post) {
         gridTiles.add(GridTile(child: PostTile(post)));
@@ -140,10 +134,29 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+  handleFollowUser() {}
+  handleUnfollowUser() {}
+
   buildProfileButton() {
     bool isProfileOwner = currentUserId == widget.profileId;
     if (isProfileOwner) {
-      return buildButton(text: "Edit Profile", function: editProfile);
+      return buildButton(
+        text: "Edit Profile",
+        function: editProfile,
+      );
+    } else {
+      if (!isFollowing) {
+        return buildButton(
+          text: " Follow",
+          function: handleFollowUser,
+        );
+      } 
+      else {
+        return buildButton(
+          text: "Unfollow",
+          function: handleUnfollowUser,
+        );
+      }
     }
   }
 
@@ -234,8 +247,10 @@ class _ProfileState extends State<Profile> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         IconButton(
-          icon: Icon(Icons.grid_on,
-            color: postOrientation == "Grid" ?Colors.black: Colors.grey,),
+          icon: Icon(
+            Icons.grid_on,
+            color: postOrientation == "Grid" ? Colors.black : Colors.grey,
+          ),
           onPressed: () => setState(() {
             this.postOrientation = "Grid";
           }),
@@ -243,7 +258,7 @@ class _ProfileState extends State<Profile> {
         IconButton(
           icon: Icon(
             Icons.list,
-            color: postOrientation == "List" ?Colors.black: Colors.grey,
+            color: postOrientation == "List" ? Colors.black : Colors.grey,
           ),
           onPressed: () => setState(() {
             this.postOrientation = "List";
@@ -256,14 +271,14 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: header(context , titleText : "Profile"),
+      appBar: header(context, titleText: "Profile"),
       body: ListView(
         children: <Widget>[
           buildProfileHeader(),
-          Divider( height : 0.0 ),
+          Divider(height: 0.0),
           buildTogglePostOrientation(),
-          Divider( height: 0.0 ),
-          buildProfilePosts( ),
+          Divider(height: 0.0),
+          buildProfilePosts(),
         ],
       ),
     );

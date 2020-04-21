@@ -4,6 +4,11 @@ import 'package:cobra1/pages/home.dart';
 
 
 void main() {
+ /* Firestore.instance.settings(timestampsInSnapshotsEnabled: true).then((_){
+    print("timestamps enabled");
+  },   onError: (_){
+    print("error  main.dart");
+  });*/
   runApp(MyApp());
 }
 
